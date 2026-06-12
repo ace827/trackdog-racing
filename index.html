@@ -526,6 +526,83 @@ textarea.form-input{resize:vertical;min-height:96px}
 .co-success-icon svg{stroke:#059669;fill:none;stroke-width:2.5;width:32px;height:32px}
 .co-success h3{font-size:1.2rem;font-weight:800;color:#111827;margin-bottom:8px}
 .co-success p{font-size:.85rem;color:#6b7280;line-height:1.7}
+
+/* ── MOBILE RESPONSIVE ──────────────────────────────── */
+@media(max-width:768px){
+  :root{--hdr-h:56px;--side-w:0px}
+
+  /* NAV */
+  .hdr-inner{padding:0 16px}
+  .hdr-nav{display:none}
+  .hdr-right{gap:8px}
+  .hdr-search{display:none}
+  .hdr-cart{font-size:.75rem;padding:6px 10px}
+  .hdr-cta{font-size:.75rem;padding:7px 12px}
+
+  /* HERO */
+  .hero{height:auto;min-height:520px}
+  .hero-ov{background:linear-gradient(to bottom,rgba(5,7,10,.82) 0%,rgba(5,7,10,.6) 60%,rgba(5,7,10,.85) 100%)}
+  .hero-main{padding:40px 0 20px}
+  .hero-content{width:100%;min-width:0;padding:0 20px}
+  .hero h1{font-size:clamp(2.2rem,9vw,3.2rem);font-weight:700;line-height:1.1}
+  .hero-sub{font-size:.85rem;margin-bottom:16px}
+  .hero-pills{gap:6px;margin-bottom:20px}
+  .hero-pill{font-size:.7rem;padding:5px 10px}
+  .hero-btns{flex-wrap:wrap;gap:10px}
+  .hero-btns a,.hero-btns button{font-size:.82rem;padding:11px 20px}
+
+  /* STATS BAR */
+  .hero-stats-bar{grid-template-columns:repeat(2,1fr)}
+  .hstat{padding:14px 16px}
+  .hstat-num{font-size:1rem}
+
+  /* HOME SECTIONS */
+  .section-inner{padding:40px 16px}
+  .prod-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .pcard{padding:10px}
+  .pcard-img{height:130px}
+  .pcard-name{font-size:.78rem}
+  .pcard-price{font-size:.85rem}
+
+  /* BAND / ABOUT */
+  .band{padding:44px 20px}
+  .band-inner{flex-direction:column;gap:28px}
+  .band-stats{grid-template-columns:1fr 1fr;gap:12px}
+  .bstat{padding:14px}
+  .bstat-n{font-size:1.8rem}
+
+  /* TECH LIBRARY */
+  .tech-grid{grid-template-columns:1fr}
+
+  /* SHOP PAGE */
+  .shop-layout{flex-direction:column}
+  .shop-sidebar{display:none}
+  .shop-main{padding:16px}
+  .shop-header{flex-wrap:wrap;gap:10px;margin-bottom:16px}
+  .prod-grid{grid-template-columns:repeat(2,1fr)}
+
+  /* FOOTER */
+  #footer{padding:36px 20px 20px}
+  .footer-grid{grid-template-columns:1fr;gap:24px}
+  .footer-bottom{flex-direction:column;gap:10px;text-align:center}
+  .footer-links{justify-content:center}
+
+  /* CART PANEL */
+  .cart-panel{width:100%}
+
+  /* PRODUCT PAGE */
+  .pdp-inner{flex-direction:column;gap:20px;padding:20px 16px}
+  .pdp-gallery{width:100%}
+  .pdp-info{width:100%}
+}
+
+@media(max-width:480px){
+  .hero h1{font-size:clamp(1.9rem,8vw,2.5rem)}
+  .prod-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .pcard-img{height:110px}
+  .hstat-num{font-size:.9rem}
+  .hstat-label{font-size:.55rem}
+}
 </style>
 </head>
 <body>
