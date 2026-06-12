@@ -685,6 +685,34 @@ html,body{overflow-x:hidden;width:100%;max-width:100vw}
 
 } /* end @media 768px */
 
+
+/* Bottom mobile nav */
+.mob-bottom-nav{
+  display:none;position:fixed;bottom:0;left:0;right:0;
+  background:#fff;border-top:1px solid #e5e7eb;z-index:200;
+  padding:6px 0 env(safe-area-inset-bottom,6px);
+  display:none}
+.mob-bn-btn{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
+  background:none;border:none;cursor:pointer;padding:6px 4px;
+  color:#6b7280;font-size:.62rem;font-weight:500;line-height:1}
+.mob-bn-btn svg{stroke:#6b7280;transition:.15s}
+.mob-bn-btn.active{color:var(--red)}
+.mob-bn-btn.active svg{stroke:var(--red)}
+.mob-filter-sub{
+  display:flex;overflow-x:auto;gap:7px;padding:7px 14px 9px;
+  background:#f9fafb;border-bottom:1px solid var(--border);
+  -webkit-overflow-scrolling:touch;position:sticky;
+  top:calc(var(--hdr-h) + 44px);z-index:49}
+.mob-filter-sub::-webkit-scrollbar{display:none}
+.mob-fcat-sub{background:#e5e7eb !important;color:#374151 !important}
+.mob-fcat-sub.active{background:var(--red) !important;color:#fff !important}
+
+@media(max-width:768px){
+  .mob-bottom-nav{display:flex}
+  body{padding-bottom:calc(60px + env(safe-area-inset-bottom,0px))}
+}
+
 </style>
 </head>
 <body>
@@ -731,6 +759,31 @@ html,body{overflow-x:hidden;width:100%;max-width:100vw}
     <a href="tel:+18005550123" class="call-btn">Call Us</a>
   </div>
 </header>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mob-bottom-nav" id="mobBottomNav">
+  <button onclick="nav('home')" id="bn-home" class="mob-bn-btn active">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>Home</span>
+  </button>
+  <button onclick="nav('shop')" id="bn-shop" class="mob-bn-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+    <span>Shop</span>
+  </button>
+  <button onclick="nav('tech')" id="bn-tech" class="mob-bn-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+    <span>Guides</span>
+  </button>
+  <button onclick="openCart()" id="bn-cart" class="mob-bn-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+    <span>Cart <span id="bnCartCount" style="display:none;background:var(--red);color:#fff;border-radius:50%;width:16px;height:16px;font-size:.6rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;margin-left:2px">0</span></span>
+  </button>
+  <button onclick="openDrawer()" class="mob-bn-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    <span>More</span>
+  </button>
+</nav>
+
 
 <div id="layout">
 
@@ -1082,7 +1135,7 @@ function renderHome(){
 
 function stripCard(p){
   const top=p.cat.split(' > ')[0];const sid=p.id.replace(/['"]/g,'');
-  return`<div class="strip-card" onclick="nav('product',null,'${sid}')">
+  return`<div class="strip-card" onclick="nav('product',null,'${sid}')" ontouchend="this._touched=true" onmousedown="this._touched=false">
     <div class="strip-img"><img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.style.display='none'"></div>
     <div class="strip-info">
       <div class="strip-cat">${top}</div>
@@ -1493,12 +1546,34 @@ function closeDrawer(){
 function buildMobFilterBar(){
   var bar=document.getElementById('mobFilterBar');
   if(!bar||window.innerWidth>768)return;
+  // Find current L1 node
+  var activeL1=null;
+  NAV_TREE.forEach(function(n){if(n.id===cat||(n.ch&&isAnc(n,cat)))activeL1=n;});
+  // L1 pills
   var cats=[{id:null,label:'All'}];
   NAV_TREE.forEach(function(n){cats.push({id:n.id,label:n.label})});
-  bar.innerHTML=cats.map(function(c){
-    var active=(cat===null&&c.id===null)||(cat===c.id);
-    return '<button class="mob-fcat'+(active?' active':'')+'" onclick="sidSetCat('+(c.id?'\''+c.id+'\'':'null')+');buildMobFilterBar()">'+c.label+'</button>';
+  var l1html=cats.map(function(c){
+    var active=(cat===null&&c.id===null)||(c.id&&(cat===c.id||isAnc({ch:NAV_TREE.filter(function(x){return x.id===c.id;})[0]&&NAV_TREE.filter(function(x){return x.id===c.id;})[0]},cat)));
+    // simpler active check
+    var isActive=(cat===null&&c.id===null)||(activeL1&&activeL1.id===c.id);
+    return '<button class="mob-fcat'+(isActive?' active':'')+'" onclick="sidSetCat('+(c.id?'''+c.id+''':'null')+');buildMobFilterBar()">'+c.label+'</button>';
   }).join('');
+  // L2 pills if a category is selected
+  var l2html='';
+  if(activeL1&&activeL1.ch&&activeL1.ch.length){
+    var subs=activeL1.ch.map(function(c){
+      var isActive=cat===c.id;
+      return '<button class="mob-fcat mob-fcat-sub'+(isActive?' active':'')+'" onclick="sidSetCat(''+c.id+'');buildMobFilterBar()">'+c.label+'</button>';
+    }).join('');
+    l2html='<div class="mob-filter-sub" id="mobFilterSub">'+subs+'</div>';
+  }
+  bar.innerHTML=l1html;
+  // show/hide sub row
+  var subEl=document.getElementById('mobFilterSub');
+  if(subEl)subEl.remove();
+  if(l2html){
+    bar.insertAdjacentHTML('afterend',l2html);
+  }
 }
 
 </script>
