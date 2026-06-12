@@ -966,36 +966,40 @@ function updateGrid(){
 function handleSearch(v){sq=v.trim();if(pg==='shop'){cat=null;updateGrid();buildSidebar();}}
 
 function isAnc(n,id){if(!id)return false;if(n.id===id)return true;if(n.ch)return n.ch.some(c=>isAnc(c,id));return false}
+
+// ── SIDEBAR — uses data-id + event delegation (no inline quote hell) ──
 function buildSidebar(){
-  const sb=document.getElementById('shopSidebar');if(!sb)return;
-  const chev='<svg viewBox="0 0 24 24" class="sid-l1-chev"><polyline points="9 18 15 12 9 6"/></svg>';
-  const chev2='<svg viewBox="0 0 24 24" class="sid-l2-chev"><polyline points="9 18 15 12 9 6"/></svg>';
-  let h='<div class="side-head">Shop by Category</div>';
-  h+='<button class="sid-all'+(cat===null?' active':'')+'" onclick="sidSetCat(null)">All Products</button>';
+  var sb=document.getElementById('shopSidebar');
+  if(!sb)return;
+  var h='<div class="side-head">Shop by Category</div>';
+  h+='<button class="sid-all'+(cat===null?' active':'')+'" data-id="" data-leaf="1">All Products</button>';
   NAV_TREE.forEach(function(n){
-    const hasCh=n.ch&&n.ch.length>0;
-    const isOpen=isAnc(n,cat);
-    const isAct=n.id===cat;
+    var isOpen=cat&&isAnc(n,cat);
+    var isAct=n.id===cat;
+    var hasCh=n.ch&&n.ch.length>0;
     h+='<div class="sid-l1">';
-    h+='<button class="sid-l1-btn'+(isAct?' active':'')+(isOpen?' open':'')+'" onclick="sidL1Click(''+n.id+'','+hasCh+')">';
+    h+='<button class="sid-l1-btn'+(isAct?' active':'')+(isOpen?' open':'')+'"';
+    h+=' data-id="'+n.id+'" data-has-ch="'+(hasCh?1:0)+'" data-level="1">';
     h+='<span class="sid-l1-label">'+n.label+'</span>';
-    if(hasCh)h+=chev;
+    if(hasCh)h+='<svg viewBox="0 0 24 24" class="sid-l1-chev"><polyline points="9 18 15 12 9 6"/></svg>';
     h+='</button>';
     if(hasCh){
       h+='<div class="sid-l2s'+(isOpen?' open':'')+'" id="sl2-'+n.id+'">';
       n.ch.forEach(function(c){
-        const hasCh2=c.ch&&c.ch.length>0;
-        const isOpen2=isAnc(c,cat);
-        const isAct2=c.id===cat;
+        var isOpen2=cat&&isAnc(c,cat);
+        var isAct2=c.id===cat;
+        var hasCh2=c.ch&&c.ch.length>0;
         h+='<div>';
-        h+='<button class="sid-l2-btn'+(isAct2?' active':'')+(isOpen2?' open':'')+'" onclick="sidL2Click(''+c.id+'','+hasCh2+')">';
+        h+='<button class="sid-l2-btn'+(isAct2?' active':'')+(isOpen2?' open':'')+'"';
+        h+=' data-id="'+c.id+'" data-has-ch="'+(hasCh2?1:0)+'" data-level="2">';
         h+='<span class="sid-l2-label">'+c.label+'</span>';
-        if(hasCh2)h+=chev2;
+        if(hasCh2)h+='<svg viewBox="0 0 24 24" class="sid-l2-chev"><polyline points="9 18 15 12 9 6"/></svg>';
         h+='</button>';
         if(hasCh2){
           h+='<div class="sid-l3s'+(isOpen2?' open':'')+'" id="sl3-'+c.id+'">';
           c.ch.forEach(function(cc){
-            h+='<button class="sid-l3-btn'+(cc.id===cat?' active':'')+'" onclick="sidSetCat(''+cc.id+'')">'+cc.label+'</button>';
+            h+='<button class="sid-l3-btn'+(cc.id===cat?' active':'')+'"';
+            h+=' data-id="'+cc.id+'" data-leaf="1">'+cc.label+'</button>';
           });
           h+='</div>';
         }
@@ -1006,28 +1010,33 @@ function buildSidebar(){
     h+='</div>';
   });
   sb.innerHTML=h;
-}
-function sidL1Click(id,hasCh){
-  sidSetCat(id);
-  if(hasCh){
-    const panel=document.getElementById('sl2-'+id);
-    if(panel){
-      const isNowOpen=panel.classList.contains('open');
-      // close all other L2 panels
-      document.querySelectorAll('.sid-l2s.open').forEach(function(p){
-        if(p.id!=='sl2-'+id){p.classList.remove('open');p.previousElementSibling&&p.previousElementSibling.classList.remove('open');}
+  // ── Event delegation — one listener on the sidebar ──
+  sb.addEventListener('click',function(e){
+    var btn=e.target.closest('[data-id]');
+    if(!btn)return;
+    var id=btn.getAttribute('data-id')||null;
+    var hasCh=btn.getAttribute('data-has-ch')==='1';
+    var lvl=btn.getAttribute('data-level');
+    // Navigate
+    sidSetCat(id);
+    // Toggle children
+    if(hasCh&&lvl==='1'){
+      // close others at L1
+      sb.querySelectorAll('.sid-l2s.open').forEach(function(p){
+        if(p.id!=='sl2-'+id){p.classList.remove('open');var pb=p.previousElementSibling;if(pb)pb.classList.remove('open');}
       });
-      if(!isNowOpen){panel.classList.add('open');panel.previousElementSibling&&panel.previousElementSibling.classList.add('open');}
+      var panel=document.getElementById('sl2-'+id);
+      if(panel)panel.classList.toggle('open');
+      btn.classList.toggle('open');
     }
-  }
+    if(hasCh&&lvl==='2'){
+      var panel2=document.getElementById('sl3-'+id);
+      if(panel2)panel2.classList.toggle('open');
+      btn.classList.toggle('open');
+    }
+  },{capture:true});
 }
-function sidL2Click(id,hasCh){
-  sidSetCat(id);
-  if(hasCh){
-    const panel=document.getElementById('sl3-'+id);
-    if(panel){panel.classList.toggle('open');panel.previousElementSibling&&panel.previousElementSibling.classList.toggle('open');}
-  }
-}
+
 function sidSetCat(id){
   cat=id;sq='';
   const si=document.getElementById('globalSearch');if(si)si.value='';
