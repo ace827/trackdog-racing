@@ -62,44 +62,46 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
 /* ── HERO ─────────────────────────────────────────── */
-.hero{position:relative;height:82vh;min-height:520px;display:flex;align-items:center;overflow:hidden}
-.hero-bg{
-  position:absolute;inset:0;
+.hero{position:relative;height:88vh;min-height:600px;display:flex;flex-direction:column;overflow:hidden}
+.hero-bg{position:absolute;inset:0;
   background-image:url('https://images.unsplash.com/photo-1434186989305-428c6e9274f2?w=1800&q=90&auto=format&fit=crop');
-  background-size:cover;background-position:center 55%;
-  transition:transform 10s ease;
-}
-.hero:hover .hero-bg{transform:scale(1.03)}
+  background-size:cover;background-position:center 50%;transition:transform 12s ease}
+.hero:hover .hero-bg{transform:scale(1.025)}
 .hero-ov{position:absolute;inset:0;
-  background:linear-gradient(108deg,rgba(5,7,10,.88) 0%,rgba(5,7,10,.6) 45%,rgba(5,7,10,.18) 100%)}
-.hero-content{position:relative;z-index:2;padding:0 72px;max-width:680px}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(224,31,38,.16);border:1px solid rgba(224,31,38,.32);
-  color:rgba(255,255,255,.9);font-size:.66rem;font-weight:700;
-  letter-spacing:.14em;text-transform:uppercase;
-  padding:6px 14px;border-radius:100px;margin-bottom:22px;
-}
-.hero-badge span{width:6px;height:6px;border-radius:50%;background:var(--red);flex-shrink:0}
-.hero h1{
-  font-size:clamp(2.5rem,4.6vw,3.8rem);font-weight:900;color:#fff;
-  line-height:1.04;letter-spacing:-.04em;margin-bottom:18px;
-}
-.hero h1 em{font-style:normal;color:var(--red)}.hero h1 strong{color:#fff}
-.hero-sub{
-  font-size:.97rem;color:rgba(255,255,255,.65);line-height:1.72;
-  max-width:440px;margin-bottom:32px;font-weight:400;
-}
+  background:linear-gradient(to right,rgba(5,7,10,.94) 0%,rgba(5,7,10,.78) 38%,rgba(5,7,10,.3) 65%,rgba(5,7,10,.05) 100%)}
+.hero-main{flex:1;display:flex;align-items:center;position:relative;z-index:2}
+.hero-content{padding:0 88px;max-width:660px}
+.hero-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:24px}
+.hero-eyebrow-dot{width:8px;height:8px;border-radius:50%;background:var(--red);flex-shrink:0;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.85)}}
+.hero-eyebrow span{font-size:.64rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.hero h1{font-size:clamp(3rem,5.2vw,4.4rem);font-weight:900;color:#fff;line-height:1.02;letter-spacing:-.045em;margin-bottom:20px}
+.hero h1 em{font-style:normal;color:var(--red)}
+.hero-sub{font-size:.97rem;color:rgba(255,255,255,.6);line-height:1.78;max-width:430px;margin-bottom:28px}
+.hero-cats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px}
+.hero-cat{padding:6px 14px;border-radius:100px;background:rgba(255,255,255,.09);
+  border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.7);
+  font-size:.73rem;font-weight:600;cursor:pointer;transition:all .15s;letter-spacing:.02em}
+.hero-cat:hover{background:rgba(224,31,38,.22);border-color:rgba(224,31,38,.4);color:#fff}
 .hero-btns{display:flex;gap:12px;flex-wrap:wrap}
 .btn-primary{padding:13px 28px;border-radius:9px;background:var(--red);color:#fff;
-  font-size:.88rem;font-weight:700;letter-spacing:.02em;transition:all .15s;
+  font-size:.88rem;font-weight:700;letter-spacing:.02em;transition:all .18s;
   border:2px solid var(--red);display:inline-flex;align-items:center;gap:8px}
-.btn-primary:hover{background:var(--red2);border-color:var(--red2);transform:translateY(-1px)}
-.btn-ghost{padding:13px 28px;border-radius:9px;background:transparent;
-  color:rgba(255,255,255,.8);font-size:.88rem;font-weight:600;
-  border:2px solid rgba(255,255,255,.24);transition:all .15s;
-  display:inline-flex;align-items:center;gap:8px}
-.btn-ghost:hover{border-color:rgba(255,255,255,.5);color:#fff}
+.btn-primary:hover{background:var(--red2);border-color:var(--red2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(224,31,38,.4)}
+.btn-ghost{padding:13px 28px;border-radius:9px;background:rgba(255,255,255,.08);
+  color:rgba(255,255,255,.82);font-size:.88rem;font-weight:600;
+  border:2px solid rgba(255,255,255,.22);transition:all .15s;display:inline-flex;align-items:center;gap:8px}
+.btn-ghost:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.45);color:#fff}
+.hero-stats-bar{position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,1fr);
+  background:rgba(8,10,15,.72);backdrop-filter:blur(20px);
+  border-top:1px solid rgba(255,255,255,.07)}
+.hstat{padding:18px 28px;border-right:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:14px}
+.hstat:last-child{border-right:none}
+.hstat-icon{width:34px;height:34px;border-radius:8px;background:rgba(224,31,38,.15);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hstat-icon svg{stroke:var(--red);fill:none;stroke-width:2;width:16px;height:16px}
+.hstat-num{font-size:1.25rem;font-weight:900;color:#fff;letter-spacing:-.03em;line-height:1}
+.hstat-label{font-size:.62rem;color:rgba(255,255,255,.38);font-weight:500;letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
 
 /* ── FEATURED STRIP (below hero) ──────────────────── */
 .feat-strip{background:#fff;border-bottom:1px solid var(--border);padding:36px 72px}
@@ -118,8 +120,8 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
   display:flex;flex-direction:column;
 }
 .strip-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px);border-color:transparent;background:#fff}
-.strip-img{aspect-ratio:1;overflow:hidden;background:#f0f0f0;position:relative}
-.strip-img img{width:100%;height:100%;object-fit:contain;padding:4px;transition:transform .3s}
+.strip-img{height:148px;overflow:hidden;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;position:relative}
+.strip-img img{max-height:130px;max-width:88%;object-fit:contain;transition:transform .3s}
 .strip-card:hover .strip-img img{transform:scale(1.06)}
 .strip-info{padding:12px 14px 14px}
 .strip-cat{font-size:.63rem;color:var(--txt3);font-weight:600;letter-spacing:.07em;text-transform:uppercase;margin-bottom:4px}
@@ -189,8 +191,8 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
   box-shadow:var(--shadow-sm);border:1px solid var(--border);
   transition:all .22s;cursor:pointer;display:flex;flex-direction:column}
 .prod-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-4px);border-color:transparent}
-.prod-img-wrap{aspect-ratio:1;overflow:hidden;background:#f8f9fa}
-.prod-img-wrap img{width:100%;height:100%;object-fit:contain;padding:6px;transition:transform .3s}
+.prod-img-wrap{height:168px;overflow:hidden;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center}
+.prod-img-wrap img{max-height:150px;max-width:88%;object-fit:contain;transition:transform .3s}
 .prod-card:hover .prod-img-wrap img{transform:scale(1.07)}
 .prod-info{padding:14px 16px 16px;flex:1;display:flex;flex-direction:column}
 .prod-cat-label{font-size:.65rem;color:var(--txt3);font-weight:600;letter-spacing:.07em;text-transform:uppercase;margin-bottom:4px}
@@ -283,10 +285,10 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 .pdp-bc{display:flex;align-items:center;gap:5px;font-size:.74rem;color:var(--txt3);margin-bottom:26px;flex-wrap:wrap}
 .pdp-bc a:hover{color:var(--red)}.pdp-bc-sep{opacity:.35}
 .pdp-grid{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start}
-.pdp-img-box{background:var(--body);border-radius:var(--radius-lg);padding:40px;aspect-ratio:1;
+.pdp-img-box{background:#fff;border-radius:var(--radius-lg);border:1px solid var(--border);padding:32px;aspect-ratio:1;
   display:flex;align-items:center;justify-content:center;border:1px solid var(--border);
   position:sticky;top:calc(var(--hdr-h)+18px)}
-.pdp-img-box img{max-height:320px;object-fit:contain}
+.pdp-img-box img{width:100%;height:100%;object-fit:contain}
 .pdp-brand{font-size:.66rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--txt3);margin-bottom:7px}
 .pdp-name{font-size:1.5rem;font-weight:800;color:var(--txt);letter-spacing:-.025em;line-height:1.22;margin-bottom:14px}
 .pdp-price{font-size:2rem;font-weight:900;color:var(--txt);letter-spacing:-.05em;margin-bottom:18px}
@@ -351,9 +353,19 @@ textarea.form-input{resize:vertical;min-height:96px}
 .tech-page h1,.events-page h1{font-size:1.9rem;font-weight:900;letter-spacing:-.03em;margin-bottom:6px;color:var(--txt)}
 .tech-page>p,.events-page>p{color:var(--txt3);font-size:.91rem;line-height:1.7;margin-bottom:32px}
 .tech-arts{display:flex;flex-direction:column;gap:16px}
-.tech-art{background:#fff;border-radius:10px;padding:24px 26px;border:1px solid var(--border);
-  cursor:pointer;transition:all .2s;display:flex;align-items:flex-start;gap:16px}
-.tech-art:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);border-color:transparent}
+.tech-art{background:#fff;border-radius:10px;border:1px solid var(--border);
+  transition:all .2s;overflow:hidden}
+.tech-art-hd{padding:22px 24px;cursor:pointer;display:flex;align-items:flex-start;gap:16px;transition:background .15s}
+.tech-art-hd:hover{background:#fafbfc}
+.tech-art.open .tech-art-hd{border-bottom:1px solid var(--border)}
+.tech-art-chevron{margin-left:auto;flex-shrink:0;transition:transform .22s;opacity:.35}
+.tech-art.open .tech-art-chevron{transform:rotate(180deg);opacity:.6}
+.tech-art-body{display:none;padding:24px 24px 24px 84px;background:#fafbfc}
+.tech-art.open .tech-art-body{display:block}
+.tech-art-body p{font-size:.86rem;color:var(--txt2);line-height:1.88;margin-bottom:12px}
+.tech-art-body h4{font-size:.82rem;font-weight:700;color:var(--txt);margin:16px 0 6px}
+.tech-art-body ul{padding-left:16px;margin:0}
+.tech-art-body li{font-size:.83rem;color:var(--txt2);line-height:1.75;margin-bottom:3px}
 .tech-art-icon{width:44px;height:44px;border-radius:8px;background:var(--red-soft);
   display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
 .tech-art-icon svg{stroke:var(--red);fill:none;stroke-width:1.8;width:20px;height:20px}
@@ -540,16 +552,47 @@ textarea.form-input{resize:vertical;min-height:96px}
   <section class="hero">
     <div class="hero-bg"></div>
     <div class="hero-ov"></div>
-    <div class="hero-content">
-      <div class="hero-badge"><span></span>Mazda Miata Specialists Since 2003</div>
-      <h1>The Miata<br>Deserves<br><em>Better Parts.</em></h1>
-      <p class="hero-sub">225+ track-proven upgrades for NA, NB, NC, and ND. Every part hand-picked by people who race them.</p>
-      <div class="hero-btns">
-        <button class="btn-primary" onclick="nav('shop')">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          Shop All Parts
-        </button>
-        <button class="btn-ghost" onclick="nav('about')">Our Story</button>
+    <div class="hero-main">
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <div class="hero-eyebrow-dot"></div>
+          <span>Mazda Miata Specialists &nbsp;·&nbsp; Est. 2003</span>
+        </div>
+        <h1>The Miata<br>Deserves<br><em>Better Parts.</em></h1>
+        <p class="hero-sub">225+ track-proven upgrades for NA, NB, NC, and ND. Every part hand-picked by people who actually race them.</p>
+        <div class="hero-cats">
+          <button class="hero-cat" onclick="nav('shop','brakes')">Brakes</button>
+          <button class="hero-cat" onclick="nav('shop','suspension')">Suspension</button>
+          <button class="hero-cat" onclick="nav('shop','exhaust')">Exhaust</button>
+          <button class="hero-cat" onclick="nav('shop','forced-induction')">Forced Induction</button>
+          <button class="hero-cat" onclick="nav('shop','cooling')">Cooling</button>
+          <button class="hero-cat" onclick="nav('shop','drivetrain')">Drivetrain</button>
+        </div>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="nav('shop')">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Shop All Parts
+          </button>
+          <button class="btn-ghost" onclick="nav('about')">Our Story</button>
+        </div>
+      </div>
+    </div>
+    <div class="hero-stats-bar">
+      <div class="hstat">
+        <div class="hstat-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+        <div><div class="hstat-num">225+</div><div class="hstat-label">Performance Parts</div></div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div><div class="hstat-num">20 Years</div><div class="hstat-label">In Business</div></div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div><div class="hstat-num">NA–ND</div><div class="hstat-label">All Generations Covered</div></div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+        <div><div class="hstat-num">Same Day</div><div class="hstat-label">Shipping Available</div></div>
       </div>
     </div>
   </section>
@@ -557,7 +600,7 @@ textarea.form-input{resize:vertical;min-height:96px}
   <!-- FEATURED PRODUCTS STRIP -->
   <div class="feat-strip">
     <div class="feat-strip-head">
-      <h2>⚡ Popular Right Now</h2>
+      <h2>Popular Right Now</h2>
       <button class="view-all" onclick="nav('shop')">See all 225 products →</button>
     </div>
     <div class="strip-grid" id="stripGrid"></div>
@@ -602,15 +645,6 @@ textarea.form-input{resize:vertical;min-height:96px}
     </div>
   </div>
 
-  <!-- CATEGORIES -->
-  <div class="categories-sec">
-    <div class="cat-sec-head">
-      <div><span class="sec-label">Browse by Category</span><h2 class="sec-title">Everything Your<br>Miata Needs.</h2></div>
-      <button class="view-all" onclick="nav('shop')">View all categories →</button>
-    </div>
-    <div class="cat-grid" id="catGrid"></div>
-  </div>
-
   <!-- DARK BAND -->
   <div class="dark-band">
     <div>
@@ -624,38 +658,6 @@ textarea.form-input{resize:vertical;min-height:96px}
       <div class="bstat"><div class="bstat-n">NA–ND</div><div class="bstat-l">All Generations</div></div>
       <div class="bstat"><div class="bstat-n">4.9★</div><div class="bstat-l">Average Rating</div></div>
       <div class="bstat"><div class="bstat-n">20yr</div><div class="bstat-l">In Business</div></div>
-    </div>
-  </div>
-
-  <!-- TESTIMONIALS -->
-  <div class="testi-sec">
-    <span class="sec-label">What Customers Say</span>
-    <h2 class="sec-title" style="margin-bottom:0">Real Miata Drivers,<br>Real Results.</h2>
-    <div class="testi-grid">
-      <div class="testi-card">
-        <div class="testi-stars" id="s1"></div>
-        <p class="testi-q">"Ordered Hawk HP+ brake pads for my NB — the difference on track was immediately obvious. Track Dog had them in stock when nobody else did. Fast shipping, perfect fitment."</p>
-        <div class="testi-author">
-          <div class="testi-av" style="background:linear-gradient(135deg,#e01f26,#7c3aed)">JM</div>
-          <div><div class="testi-name">Jason M.</div><div class="testi-meta">1999 Miata · SCCA Club Racer</div></div>
-        </div>
-      </div>
-      <div class="testi-card">
-        <div class="testi-stars" id="s2"></div>
-        <p class="testi-q">"Called with a question about the NC brake cooling kit — the guy who answered actually races an NC. Talked me through the install. That's service you can't get from Amazon."</p>
-        <div class="testi-author">
-          <div class="testi-av" style="background:linear-gradient(135deg,#059669,#0284c7)">SK</div>
-          <div><div class="testi-name">Sarah K.</div><div class="testi-meta">2010 MX-5 · Autocross</div></div>
-        </div>
-      </div>
-      <div class="testi-card">
-        <div class="testi-stars" id="s3"></div>
-        <p class="testi-q">"Third order this year. Got the Racing Beat exhaust for my NA — sounds perfect, fitment was dead-on. These guys are the real deal for Miata parts."</p>
-        <div class="testi-author">
-          <div class="testi-av" style="background:linear-gradient(135deg,#d97706,#dc2626)">RP</div>
-          <div><div class="testi-name">Ryan P.</div><div class="testi-meta">1992 Miata · Track Days</div></div>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -866,15 +868,7 @@ function renderHome(){
     PRODUCTS.forEach(p=>{const top=p.cat.split(' > ')[0];if(!seen.has(top)&&p.img&&p.price){seen.add(top);feat.push(p);}});
     sg.innerHTML=feat.slice(0,8).map(p=>stripCard(p)).join('');
   }
-  // Cat grid
-  const cg=document.getElementById('catGrid');
-  if(cg)cg.innerHTML=CATS.map(c=>`
-    <div class="cat-card" onclick="nav('shop','${c.id}')">
-      <div class="cat-bg" style="background-image:url('${c.img}');background-color:${c.col}"></div>
-      <div class="cat-ov"></div>
-      <div class="cat-body"><div class="cat-tag">Shop Now</div><h3>${c.label}</h3><small>${c.sub}</small></div>
-      <div class="cat-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-    </div>`).join('');
+
 }
 
 function stripCard(p){
@@ -990,12 +984,73 @@ function renderProduct(id){
 
 function renderTech(){
   const arts=[
-    {t:'Brake Pad Selection Guide',d:'How to choose between street, performance, and full-race pads. Covers HPS, HP+, DTC-30, DTC-60, and more.',tag:'Brakes',ic:'brake'},
-    {t:'Brake Bed-In Procedure',d:"The correct way to bed in new brake pads and rotors. Skip this and you'll never get full performance.",tag:'Brakes',ic:'therm'},
-    {t:'Suspension Setup for Autocross',d:'Corner weights, alignment, sway bar tuning, and shock adjustment for competitive autocross on the Miata.',tag:'Suspension',ic:'wave'},
-    {t:'Supercharger vs. Turbo for the Miata',d:'The honest comparison — power delivery, reliability, cost, and drivability. Which is right for your build?',tag:'Forced Induction',ic:'bolt'},
-    {t:'Cooling System Maintenance',d:'Coolant flush intervals, thermostat selection, and when to upgrade your radiator. Keep your Miata cool on track.',tag:'Cooling',ic:'drop'},
-    {t:'Torsen vs. Viscous Differential',d:"Understanding the Miata's diff options and how they affect handling — critical for autocross and track.",tag:'Drivetrain',ic:'gear'},
+    {t:'Brake Pad Selection Guide',tag:'Brakes',ic:'brake',
+     body:`<p>Choosing the right brake pad depends entirely on how you drive. Here's the breakdown by compound:</p>
+     <h4>Street / Light Performance</h4>
+     <ul><li><strong>Hawk HPS</strong> — Best all-around street pad. Low dust, quiet, great initial bite. Good for daily drivers that occasionally hit an autocross.</li>
+     <li><strong>Hawk HP Plus</strong> — More aggressive than HPS. Excellent for spirited driving and occasional track days. Still street-able.</li>
+     <li><strong>Performance Ceramic</strong> — Cleanest option. Low dust, good modulation, very quiet. Best for street-only drivers.</li></ul>
+     <h4>Track / Competition</h4>
+     <ul><li><strong>Hawk DTC-30</strong> — Entry-level race compound. Needs heat to work properly. Not ideal for street driving.</li>
+     <li><strong>Hawk DTC-60</strong> — Mid-range race compound. Consistent high-temp performance. Great for HPDE and club racing.</li>
+     <li><strong>Hawk HT-10</strong> — Full race compound. Maximum fade resistance. Requires proper warm-up laps.</li></ul>
+     <p><strong>Bottom line:</strong> If you're 90% street and 10% track, go HP Plus front/HPS rear. If you're doing real track days, step up to DTC-60.</p>`},
+    {t:'Brake Bed-In Procedure',tag:'Brakes',ic:'therm',
+     body:`<p>New brake pads and rotors must be properly bedded in to achieve maximum performance and prevent uneven deposit transfer. Skipping this step leads to judder, reduced bite, and warped rotors.</p>
+     <h4>The Procedure</h4>
+     <ul><li>Find an empty road or parking lot. Start at 60 mph.</li>
+     <li>Apply moderate pressure (not a panic stop) and slow to about 10 mph. Don't come to a full stop.</li>
+     <li>Immediately accelerate back to 60 mph. Repeat 6–8 times.</li>
+     <li>Allow brakes to cool completely — 15 minutes minimum with no hard applications.</li>
+     <li>Repeat the sequence a second time, this time with slightly more pressure.</li></ul>
+     <h4>What You're Doing</h4>
+     <p>You're evenly depositing pad material across the entire rotor surface and degassing the resin binders in the pad. Properly bedded brakes will have a slightly grey appearance on the rotor face — that's correct.</p>
+     <p><strong>Common mistake:</strong> Coming to a complete stop while brakes are hot. This leaves a concentrated pad deposit exactly where you stopped — causing pedal pulsation.</p>`},
+    {t:'Suspension Setup for Autocross',tag:'Suspension',ic:'wave',
+     body:`<p>Autocross rewards precision and balance far more than outright power. The Miata is one of the best platforms because it's already well-balanced — you're tuning an excellent base.</p>
+     <h4>Alignment Targets (Street Category)</h4>
+     <ul><li><strong>Camber:</strong> -1.5° to -2.0° front, -1.5° rear. More camber increases contact patch in corners but reduces straight-line braking.</li>
+     <li><strong>Toe:</strong> 0 to slight toe-out front (1–2mm), slight toe-in rear (2–3mm). Toe-out front quickens turn-in; toe-in rear adds stability.</li>
+     <li><strong>Caster:</strong> Maximize factory caster for improved straight-line tracking and return-to-center feel.</li></ul>
+     <h4>Sway Bar Tuning</h4>
+     <p>The stock Miata tends toward mild understeer. Running the front sway bar softer and rear firmer (or disconnecting the front entirely) rotates the balance toward neutral or mild oversteer — much more enjoyable to drive.</p>
+     <h4>Spring Rates</h4>
+     <p>For autocross, 400–500 lb/in front and 350–450 lb/in rear is a common starting point. Going stiffer than this on smooth pavement is fine; on rough surfaces, compliance matters.</p>`},
+    {t:'Supercharger vs. Turbo for the Miata',tag:'Forced Induction',ic:'bolt',
+     body:`<p>This is the most common question we get from customers looking to significantly increase power. Both are excellent options — they're just different in character.</p>
+     <h4>Supercharger (Rotrex / FM / Moss)</h4>
+     <ul><li><strong>Power delivery:</strong> Linear, follows throttle input naturally. Feels like more engine, not a different engine.</li>
+     <li><strong>Reliability:</strong> Simpler system. No turbo lag, no heat soak concerns. Easier on the cooling system.</li>
+     <li><strong>Peak power:</strong> Typically 180–220 whp on a stock block. More with supporting mods.</li>
+     <li><strong>Street driveability:</strong> Excellent. You can drive it daily without any compromises.</li></ul>
+     <h4>Turbo</h4>
+     <ul><li><strong>Power delivery:</strong> Strong mid-range surge when boost builds. More dramatic power feeling.</li>
+     <li><strong>Peak power:</strong> Higher ceiling — 250+ whp possible with supporting mods.</li>
+     <li><strong>Complexity:</strong> Requires intercooler, boost controller, tune. More heat, more plumbing.</li>
+     <li><strong>Cost:</strong> Higher total build cost to do properly.</li></ul>
+     <p><strong>Our recommendation:</strong> For street/dual-purpose use, supercharger. For dedicated track builds chasing power, turbo.</p>`},
+    {t:'Cooling System Maintenance',tag:'Cooling',ic:'drop',
+     body:`<p>The Miata runs warm by design — a small car with a snug engine bay. On track, inadequate cooling ends your day (and possibly your engine). Stay ahead of it.</p>
+     <h4>Coolant Service Intervals</h4>
+     <ul><li>Stock green coolant: flush every 2 years or 24,000 miles</li>
+     <li>OAT (orange/red): every 5 years or 50,000 miles</li>
+     <li>After any track day: check concentration and pH — heat cycles degrade coolant faster</li></ul>
+     <h4>When to Upgrade Your Radiator</h4>
+     <p>If you're seeing coolant temps above 220°F on track, or your stock radiator is 10+ years old with unknown service history, upgrade. A quality aluminum radiator (Koyo, CSF) drops operating temps 10–20°F and eliminates the risk of a surprise failure at the worst time.</p>
+     <h4>Track Day Prep</h4>
+     <ul><li>Use water + Water Wetter (no pure water — it boils at a lower temp)</li>
+     <li>Or use a racing coolant like Evans Waterless for zero-boilover protection</li>
+     <li>Check hoses and clamps before every event</li></ul>`},
+    {t:'Torsen vs. Viscous Differential',tag:'Drivetrain',ic:'gear',
+     body:`<p>The differential is one of the most underappreciated handling components on the Miata. Understanding what you have — and what you might want — matters for both track and autocross driving.</p>
+     <h4>Open Differential (Base models)</h4>
+     <p>Sends power to the wheel with least resistance. When one wheel lifts or loses traction, power goes there. Results in one-wheel-peel exits from corners — slow and ugly.</p>
+     <h4>Viscous LSD (Most 1990–1997 SE/LE, some NB)</h4>
+     <p>Uses a fluid coupling to gradually lock the diff under slip. Smooth, progressive engagement. Good for street driving and novice track drivers. Less effective when worn (common on older cars).</p>
+     <h4>Torsen LSD (Mazdaspeed models, some packages)</h4>
+     <p>Gear-type limited slip. Torque-sensing — responds to torque difference rather than slip speed. More immediate and aggressive. Preferred for autocross and track driving because it's more consistent and doesn't wear out.</p>
+     <h4>Should You Upgrade?</h4>
+     <p>If your car has an open diff or a worn viscous unit, a Torsen (or aftermarket Kaaz/OS Giken) transforms corner exit traction. It's one of the highest ROI mods on the car.</p>`},
   ];
   const icons={
     brake:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>',
@@ -1005,9 +1060,23 @@ function renderTech(){
     drop:'<svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg>',
     gear:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>',
   };
-  document.getElementById('techArts').innerHTML=arts.map(a=>`
-    <div class="tech-art"><div class="tech-art-icon">${icons[a.ic]}</div>
-    <div><h3>${a.t}</h3><p>${a.d}</p><span class="tech-art-tag">${a.tag}</span></div></div>`).join('');
+  const chevSvgDown='<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>';
+  document.getElementById('techArts').innerHTML=arts.map((a,i)=>`
+    <div class="tech-art" id="tart${i}">
+      <div class="tech-art-hd" onclick="toggleArt(${i})">
+        <div class="tech-art-icon">${icons[a.ic]}</div>
+        <div style="flex:1">
+          <h3>${a.t}</h3>
+          <span class="tech-art-tag">${a.tag}</span>
+        </div>
+        <div class="tech-art-chevron">${chevSvgDown}</div>
+      </div>
+      <div class="tech-art-body">${a.body}</div>
+    </div>`).join('');
+}
+function toggleArt(i){
+  const el=document.getElementById('tart'+i);
+  el.classList.toggle('open');
 }
 
 function renderEvents(){
