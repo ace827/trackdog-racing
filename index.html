@@ -691,6 +691,126 @@ textarea.form-input{resize:vertical;min-height:96px}
   .footer-links{justify-content:center !important;flex-wrap:wrap !important}
 }
 
+
+/* ═══════════════════════════════════════════════════
+   MOBILE  ≤ 768px  —  completely separate layout
+═══════════════════════════════════════════════════ */
+@media(max-width:768px){
+
+/* ── BASE ── */
+html,body{overflow-x:hidden;width:100%;max-width:100vw}
+:root{--hdr-h:54px}
+
+/* ── HEADER ── */
+#hdr{padding:0 16px}
+.hdr-nav{display:none}
+.search-box{display:none}
+.call-btn{display:none}
+.hdr-right{gap:8px}
+.cart-btn{padding:7px 12px;font-size:.78rem;gap:5px}
+.mob-menu-btn{display:flex}
+
+/* ── HERO: full phone screen, text bottom ── */
+.hero{height:100svh;min-height:0}
+.hero-bg{background-attachment:scroll}
+.hero-ov{background:linear-gradient(to bottom,
+  rgba(5,7,10,.5) 0%,rgba(5,7,10,.15) 35%,
+  rgba(5,7,10,.7) 65%,rgba(5,7,10,.97) 100%)}
+.hero-main{align-items:flex-end;padding-bottom:0}
+.hero-content{width:100%;min-width:0;padding:0 18px 24px}
+.hero h1{font-size:2.1rem;font-weight:700;line-height:1.1;letter-spacing:-.02em}
+.hero-eyebrow{margin-bottom:14px}
+.hero-sub{font-size:.82rem;max-width:100%;margin-bottom:14px}
+.hero-cats{gap:6px;margin-bottom:16px}
+.hero-cat{font-size:.68rem;padding:5px 11px}
+.hero-btns{gap:9px}
+.hero-btns a,.hero-btns button{flex:1;justify-content:center;font-size:.83rem;padding:12px 10px}
+
+/* ── STATS BAR 2×2 ── */
+.hero-stats-bar{grid-template-columns:1fr 1fr}
+.hstat:nth-child(2){border-right:none}
+.hstat{padding:13px 14px;gap:9px}
+.hstat-icon{width:28px;height:28px}
+.hstat-num{font-size:.95rem}
+
+/* ── TRUST BAR: stack vertically ── */
+.trust-bar{padding:0 16px;flex-direction:column;gap:0}
+.trust-item{width:100%;border-right:none;border-bottom:1px solid var(--border);padding:13px 0}
+.trust-item:last-child{border-bottom:none}
+
+/* ── HOME SECTIONS ── */
+.feat-strip{padding:28px 16px}
+.feat-strip-head{flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.feat-strip-head h2{font-size:1.1rem}
+
+/* Product strip: horizontal scroll row (real phone-app style) */
+.strip-grid{
+  display:flex;
+  flex-direction:row;
+  overflow-x:auto;
+  gap:12px;
+  padding-bottom:8px;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  grid-template-columns:unset
+}
+.strip-grid::-webkit-scrollbar{display:none}
+.strip-card{
+  flex:0 0 160px;
+  width:160px;
+  scroll-snap-align:start
+}
+.strip-img{height:110px}
+.strip-name{font-size:.74rem}
+.strip-price{font-size:.8rem}
+
+/* ── ABOUT SPLIT: stack, image on top ── */
+.about-split{grid-template-columns:1fr;display:flex;flex-direction:column}
+.about-img{order:-1;height:220px;width:100%;object-fit:cover}
+.about-text{padding:28px 18px}
+.about-text .sec-title{font-size:1.6rem}
+
+/* ── CATEGORY GRID 2 col ── */
+.cat-sec-head{flex-direction:column;align-items:flex-start;gap:8px;margin-bottom:18px}
+.cat-grid{grid-template-columns:1fr 1fr;gap:10px;padding-bottom:28px}
+
+/* ── DARK BAND: single column ── */
+.dark-band{grid-template-columns:1fr;gap:28px;padding:40px 18px}
+.band-title{font-size:1.65rem}
+.band-stats{gap:10px}
+.bstat{padding:14px 12px}
+.bstat-n{font-size:1.7rem}
+
+/* ── SHOP PAGE: no sidebar ── */
+.shop-layout{flex-direction:column}
+.shop-sidebar{display:none}
+.shop-main{padding:14px 14px;width:100%;min-width:0}
+.shop-hd{flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.shop-hd h2{font-size:1rem}
+.prod-grid{grid-template-columns:1fr 1fr;gap:10px}
+.prod-img-wrap{height:125px}
+.prod-info{padding:10px 11px 12px}
+.prod-name{font-size:.76rem}
+.prod-price{font-size:.85rem}
+.prod-atc{font-size:.7rem;padding:5px 9px}
+
+/* ── PRODUCT DETAIL ── */
+.pdp-inner{flex-direction:column;padding:16px;gap:18px}
+.pdp-gallery,.pdp-info{width:100%;min-width:0}
+
+/* ── CART PANEL ── */
+.cart-panel{width:100vw;right:-100vw}
+.cart-panel.open{right:0}
+
+/* ── FOOTER ── */
+#footer{padding:32px 16px 20px}
+.footer-grid{grid-template-columns:1fr;gap:20px}
+.footer-brand p{max-width:100%}
+.footer-bottom{flex-direction:column;gap:8px;text-align:center}
+.footer-links{justify-content:center;flex-wrap:wrap}
+
+} /* end @media */
+
 </style>
 </head>
 <body>
