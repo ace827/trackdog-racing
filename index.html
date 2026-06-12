@@ -1171,16 +1171,12 @@ function getFiltered(){
   return ps;
 }
 function findN(tree,id){for(const n of tree){if(n.id===id)return n;if(n.ch){const f=findN(n.ch,id);if(f)return f;}}return null}
-var _lastGridKey='';
 function updateGrid(){
   const ps=getFiltered();
-  const key=(sq||'')+'|'+(cat||'');
   const label=sq?`"${sq}"`:cat?(findN(NAV_TREE,cat)||{label:'Products'}).label:'All Products';
-  const el=document.getElementById('shopTitle');if(el)el.textContent=label;
-  const ec=document.getElementById('shopCount');if(ec)ec.textContent=`${ps.length} product${ps.length!==1?'s':''}`;
-  if(key===_lastGridKey)return; // skip re-render if filter unchanged
-  _lastGridKey=key;
-  const g=document.getElementById('shopGrid');if(!g)return;
+  document.getElementById('shopTitle').textContent=label;
+  document.getElementById('shopCount').textContent=`${ps.length} product${ps.length!==1?'s':''}`;
+  const g=document.getElementById('shopGrid');
   g.innerHTML=ps.length?ps.map(p=>pCard(p)).join(''):`<div class="empty-state"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><h3>No products found</h3><p>Try a different search or browse a category.</p></div>`;
 }
 function handleSearch(v){sq=v.trim();if(pg==='shop'){cat=null;updateGrid();buildSidebar();buildMobFilterBar();}}
@@ -1188,20 +1184,9 @@ function handleSearch(v){sq=v.trim();if(pg==='shop'){cat=null;updateGrid();build
 function isAnc(n,id){if(!id)return false;if(n.id===id)return true;if(n.ch)return n.ch.some(c=>isAnc(c,id));return false}
 
 // ── SIDEBAR — uses data-id + event delegation (no inline quote hell) ──
-var _lastSideKey='__init__';
 function buildSidebar(){
   var sb=document.getElementById('shopSidebar');
   if(!sb)return;
-  var key=(cat||'')+'|'+(sq||'');
-  if(key===_lastSideKey&&sb.innerHTML){
-    // just update active classes without full rebuild
-    sb.querySelectorAll('[data-id]').forEach(function(b){
-      var id=b.getAttribute('data-id')||null;
-      b.classList.toggle('active',id===cat||(id===''&&cat===null));
-    });
-    return;
-  }
-  _lastSideKey=key;
   var h='<div class="side-head">Shop by Category</div>';
   h+='<button class="sid-all'+(cat===null?' active':'')+'" data-id="" data-leaf="1">All Products</button>';
   NAV_TREE.forEach(function(n){
