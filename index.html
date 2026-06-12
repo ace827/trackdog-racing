@@ -408,7 +408,7 @@ textarea.form-input{resize:vertical;min-height:96px}
 
 /* ── FOOTER ─────────────────────────────────────────── */
 #footer{background:var(--hdr);color:rgba(255,255,255,.48);padding:52px 72px 28px}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;margin-bottom:40px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:44px;margin-bottom:40px}
 .footer-brand p{font-size:.78rem;line-height:1.78;margin-top:14px;
   color:rgba(255,255,255,.32);max-width:240px}
 .footer-col h4{font-size:.65rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
@@ -674,20 +674,6 @@ textarea.form-input{resize:vertical;min-height:96px}
     </div>
   </div>
 
-  <!-- AI STRIP -->
-  <div class="ai-strip">
-    <div>
-      <span class="ai-label">AI Phone Assistant</span>
-      <h2 class="ai-title">Questions? Our AI is<br>Available 24/7.</h2>
-      <p class="ai-p">Can't reach us during business hours? Our AI phone assistant knows our entire catalog and can answer fitment questions, check availability, and capture your order — any time, day or night.</p>
-    </div>
-    <div class="ai-box">
-      <p class="ai-box-p">Try a live call with our AI assistant</p>
-      <button class="ai-call-btn" onclick="startAICall()">🎙️ Start AI Demo Call</button>
-      <p class="ai-fine">Powered by Retell AI · Demo only</p>
-    </div>
-  </div>
-
 </div><!-- /page-home -->
 
 <!-- ═══ SHOP ═══════════════════════════════════════════ -->
@@ -779,7 +765,7 @@ textarea.form-input{resize:vertical;min-height:96px}
     </div>
     <div class="footer-col"><h4>Shop</h4><a href="#" onclick="nav('shop');return false">All Products</a><a href="#" onclick="nav('shop','brakes');return false">Brakes</a><a href="#" onclick="nav('shop','suspension');return false">Suspension</a><a href="#" onclick="nav('shop','forced-induction');return false">Forced Induction</a><a href="#" onclick="nav('shop','exhaust');return false">Exhaust</a></div>
     <div class="footer-col"><h4>Company</h4><a href="#" onclick="nav('about');return false">About Us</a><a href="#" onclick="nav('contact');return false">Contact</a><a href="#" onclick="nav('tech');return false">Tech Library</a><a href="#" onclick="nav('events');return false">Events</a></div>
-    <div class="footer-col"><h4>Support</h4><a href="#">Shipping Policy</a><a href="#">Returns</a><a href="#">Fitment Guide</a><a href="#">FAQ</a></div>
+  
   </div>
   <div class="footer-bottom">
     <span>© 2024 Track Dog Racing. All rights reserved.</span>
@@ -1015,25 +1001,9 @@ function buildSidebar(){
     var btn=e.target.closest('[data-id]');
     if(!btn)return;
     var id=btn.getAttribute('data-id')||null;
-    var hasCh=btn.getAttribute('data-has-ch')==='1';
-    var lvl=btn.getAttribute('data-level');
-    // Navigate
+    // sidSetCat sets cat, calls buildSidebar() which already opens
+    // the correct panels via isAnc() — no manual toggle needed
     sidSetCat(id);
-    // Toggle children
-    if(hasCh&&lvl==='1'){
-      // close others at L1
-      sb.querySelectorAll('.sid-l2s.open').forEach(function(p){
-        if(p.id!=='sl2-'+id){p.classList.remove('open');var pb=p.previousElementSibling;if(pb)pb.classList.remove('open');}
-      });
-      var panel=document.getElementById('sl2-'+id);
-      if(panel)panel.classList.toggle('open');
-      btn.classList.toggle('open');
-    }
-    if(hasCh&&lvl==='2'){
-      var panel2=document.getElementById('sl3-'+id);
-      if(panel2)panel2.classList.toggle('open');
-      btn.classList.toggle('open');
-    }
   },{capture:true});
 }
 
