@@ -118,8 +118,8 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
   display:flex;flex-direction:column;
 }
 .strip-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px);border-color:transparent;background:#fff}
-.strip-img{aspect-ratio:4/3;overflow:hidden;background:#f0f0f0;position:relative}
-.strip-img img{width:100%;height:100%;object-fit:contain;padding:12px;transition:transform .3s}
+.strip-img{aspect-ratio:1;overflow:hidden;background:#f0f0f0;position:relative}
+.strip-img img{width:100%;height:100%;object-fit:contain;padding:4px;transition:transform .3s}
 .strip-card:hover .strip-img img{transform:scale(1.06)}
 .strip-info{padding:12px 14px 14px}
 .strip-cat{font-size:.63rem;color:var(--txt3);font-weight:600;letter-spacing:.07em;text-transform:uppercase;margin-bottom:4px}
@@ -189,8 +189,8 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
   box-shadow:var(--shadow-sm);border:1px solid var(--border);
   transition:all .22s;cursor:pointer;display:flex;flex-direction:column}
 .prod-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-4px);border-color:transparent}
-.prod-img-wrap{aspect-ratio:4/3;overflow:hidden;background:#f8f9fa}
-.prod-img-wrap img{width:100%;height:100%;object-fit:contain;padding:16px;transition:transform .3s}
+.prod-img-wrap{aspect-ratio:1;overflow:hidden;background:#f8f9fa}
+.prod-img-wrap img{width:100%;height:100%;object-fit:contain;padding:6px;transition:transform .3s}
 .prod-card:hover .prod-img-wrap img{transform:scale(1.07)}
 .prod-info{padding:14px 16px 16px;flex:1;display:flex;flex-direction:column}
 .prod-cat-label{font-size:.65rem;color:var(--txt3);font-weight:600;letter-spacing:.07em;text-transform:uppercase;margin-bottom:4px}
@@ -403,6 +403,104 @@ textarea.form-input{resize:vertical;min-height:96px}
 .empty-state svg{width:52px;height:52px;opacity:.18;margin-bottom:12px;stroke:var(--txt3);fill:none;stroke-width:1.2}
 .empty-state h3{font-size:.96rem;font-weight:700;color:var(--txt2);margin-bottom:4px}
 .empty-state p{font-size:.81rem;line-height:1.7}
+
+/* ── CART PANEL ─────────────────────────────── */
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;opacity:0;pointer-events:none;transition:opacity .25s}
+.cart-overlay.open{opacity:1;pointer-events:all}
+.cart-panel{position:fixed;top:0;right:-440px;width:420px;height:100vh;background:#fff;z-index:201;
+  display:flex;flex-direction:column;transition:right .3s cubic-bezier(.4,0,.2,1);
+  box-shadow:-8px 0 40px rgba(0,0,0,.15)}
+.cart-panel.open{right:0}
+.cart-hd{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;
+  border-bottom:1px solid #e5e7eb;flex-shrink:0}
+.cart-hd h3{font-size:1.05rem;font-weight:800;color:#111827;letter-spacing:-.02em}
+.cart-close{width:32px;height:32px;border-radius:8px;background:#f4f5f7;display:flex;align-items:center;
+  justify-content:center;cursor:pointer;border:none;transition:background .15s}
+.cart-close:hover{background:#e5e7eb}
+.cart-close svg{stroke:#374151;fill:none;stroke-width:2.5;width:14px;height:14px}
+.cart-items{flex:1;overflow-y:auto;padding:16px 24px}
+.cart-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  height:100%;text-align:center;color:#9ca3af;gap:12px}
+.cart-empty svg{width:52px;height:52px;stroke:#d1d5db;fill:none;stroke-width:1}
+.cart-empty p{font-size:.87rem;line-height:1.6}
+.cart-empty-btn{padding:10px 22px;border-radius:8px;background:#e01f26;color:#fff;
+  font-size:.82rem;font-weight:700;border:none;cursor:pointer;margin-top:4px;transition:background .15s}
+.cart-empty-btn:hover{background:#b91c1c}
+.cart-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid #f3f4f6;align-items:flex-start}
+.cart-item:last-child{border-bottom:none}
+.ci-img{width:68px;height:68px;border-radius:8px;background:#f4f5f7;border:1px solid #e5e7eb;
+  flex-shrink:0;object-fit:contain;padding:6px}
+.ci-info{flex:1;min-width:0}
+.ci-name{font-size:.82rem;font-weight:700;color:#111827;line-height:1.35;margin-bottom:4px}
+.ci-cat{font-size:.68rem;color:#9ca3af;font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+.ci-row{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+.ci-qty{display:flex;align-items:center;gap:8px}
+.ci-qty button{width:26px;height:26px;border-radius:6px;background:#f4f5f7;border:1px solid #e5e7eb;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.9rem;font-weight:700;
+  color:#374151;transition:all .15s}
+.ci-qty button:hover{background:#e5e7eb}
+.ci-qty span{font-size:.84rem;font-weight:700;color:#111827;min-width:18px;text-align:center}
+.ci-remove{font-size:.7rem;color:#9ca3af;background:none;border:none;cursor:pointer;padding:2px;
+  transition:color .15s}
+.ci-remove:hover{color:#e01f26}
+.ci-price{font-size:.9rem;font-weight:800;color:#111827;letter-spacing:-.02em}
+.cart-footer{flex-shrink:0;padding:16px 24px 24px;border-top:1px solid #e5e7eb;background:#fff}
+.cart-sub-row{display:flex;justify-content:space-between;align-items:center;
+  font-size:.84rem;color:#6b7280;margin-bottom:6px}
+.cart-sub-row.total{font-size:1rem;font-weight:800;color:#111827;margin-bottom:16px;padding-top:6px;
+  border-top:1px solid #e5e7eb}
+.cart-checkout-btn{width:100%;padding:14px;border-radius:10px;background:#e01f26;color:#fff;
+  font-size:.9rem;font-weight:800;border:none;cursor:pointer;letter-spacing:.02em;transition:background .15s;
+  display:flex;align-items:center;justify-content:center;gap:8px}
+.cart-checkout-btn:hover{background:#b91c1c}
+.cart-continue{width:100%;padding:10px;border-radius:10px;background:transparent;color:#6b7280;
+  font-size:.8rem;font-weight:600;border:1px solid #e5e7eb;cursor:pointer;margin-top:8px;transition:all .15s}
+.cart-continue:hover{border-color:#d1d5db;color:#374151}
+
+/* ── CHECKOUT MODAL ─────────────────────────────────── */
+.checkout-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:300;display:none;
+  align-items:center;justify-content:center;padding:20px}
+.checkout-overlay.open{display:flex}
+.checkout-modal{background:#fff;border-radius:16px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto}
+.co-hd{display:flex;align-items:center;justify-content:space-between;padding:22px 28px;
+  border-bottom:1px solid #e5e7eb}
+.co-hd h3{font-size:1.05rem;font-weight:800;color:#111827}
+.co-close{width:32px;height:32px;border-radius:8px;background:#f4f5f7;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:background .15s}
+.co-close:hover{background:#e5e7eb}
+.co-close svg{stroke:#374151;fill:none;stroke-width:2.5;width:14px;height:14px}
+.co-body{padding:24px 28px}
+.co-section{margin-bottom:20px}
+.co-section-title{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:#6b7280;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.co-section-title::after{content:'';flex:1;height:1px;background:#e5e7eb}
+.co-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.co-row.full{grid-template-columns:1fr}
+.co-label{display:block;font-size:.72rem;font-weight:600;color:#374151;margin-bottom:4px}
+.co-input{width:100%;padding:9px 12px;border-radius:7px;border:1px solid #d1d5db;
+  font-size:.84rem;color:#111827;font-family:'Inter',sans-serif;outline:none;transition:border-color .15s}
+.co-input:focus{border-color:#e01f26;box-shadow:0 0 0 3px rgba(224,31,38,.07)}
+.co-order-items{background:#f9fafb;border-radius:8px;padding:12px;margin-bottom:16px}
+.co-order-item{display:flex;justify-content:space-between;font-size:.81rem;color:#374151;
+  padding:4px 0}
+.co-totals{border-top:1px solid #e5e7eb;padding-top:10px;margin-top:10px}
+.co-total-row{display:flex;justify-content:space-between;font-size:.82rem;color:#6b7280;margin-bottom:5px}
+.co-total-row.grand{font-size:.96rem;font-weight:800;color:#111827;margin-top:8px;padding-top:8px;border-top:1px solid #e5e7eb}
+.co-place-btn{width:100%;padding:14px;border-radius:10px;background:#e01f26;color:#fff;
+  font-size:.9rem;font-weight:800;border:none;cursor:pointer;transition:background .15s;
+  display:flex;align-items:center;justify-content:center;gap:8px}
+.co-place-btn:hover{background:#b91c1c}
+.co-secure{display:flex;align-items:center;justify-content:center;gap:6px;
+  font-size:.72rem;color:#9ca3af;margin-top:10px}
+.co-secure svg{width:12px;height:12px;stroke:#9ca3af;fill:none;stroke-width:2}
+.co-success{display:none;flex-direction:column;align-items:center;justify-content:center;
+  padding:48px 28px;text-align:center}
+.co-success.show{display:flex}
+.co-success-icon{width:64px;height:64px;border-radius:50%;background:#d1fae5;
+  display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.co-success-icon svg{stroke:#059669;fill:none;stroke-width:2.5;width:32px;height:32px}
+.co-success h3{font-size:1.2rem;font-weight:800;color:#111827;margin-bottom:8px}
+.co-success p{font-size:.85rem;color:#6b7280;line-height:1.7}
 </style>
 </head>
 <body>
@@ -425,7 +523,7 @@ textarea.form-input{resize:vertical;min-height:96px}
       <svg viewBox="0 0 24 24" width="14" height="14"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       <input type="text" id="globalSearch" placeholder="Search parts, brands…" oninput="handleSearch(this.value)" onkeydown="if(event.key==='Enter'&&this.value)nav('shop')" autocomplete="off">
     </div>
-    <button class="cart-btn" onclick="alert('Cart is live on the full WooCommerce build.')">
+    <button class="cart-btn" onclick="openCart()">
       <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
       Cart <div class="cart-count" id="cartCount">0</div>
     </button>
@@ -788,7 +886,7 @@ function stripCard(p){
       <div class="strip-name">${p.name}</div>
       <div class="strip-footer">
         <div class="strip-price">${p.price}</div>
-        <button class="strip-atc" onclick="event.stopPropagation();addCart()">Add</button>
+        <button class="strip-atc" onclick="event.stopPropagation();addCart('${{sid}}')">Add</button>
       </div>
     </div>
   </div>`;
@@ -803,7 +901,7 @@ function pCard(p){
       <div class="prod-name">${p.name}</div>
       <div class="prod-footer">
         <div class="prod-price">${p.price}</div>
-        <button class="prod-atc" onclick="event.stopPropagation();addCart()">Add to Cart</button>
+        <button class="prod-atc" onclick="event.stopPropagation();addCart('${{sid}}')">Add to Cart</button>
       </div>
     </div>
   </div>`;
@@ -932,8 +1030,115 @@ function renderEvents(){
     </div>`).join('');
 }
 
-let cartN=0;
-function addCart(){cartN++;document.getElementById('cartCount').textContent=cartN}
+
+// ── CART STATE ─────────────────────────────────────────
+let cartItems = [];
+
+function openCart() {
+  document.getElementById('cartOverlay').classList.add('open');
+  document.getElementById('cartPanel').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCart() {
+  document.getElementById('cartOverlay').classList.remove('open');
+  document.getElementById('cartPanel').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function addCart(pid) {
+  const p = pid ? PRODUCTS.find(x => x.id === pid) : PRODUCTS[Math.floor(Math.random() * PRODUCTS.length)];
+  if (!p) return;
+  const existing = cartItems.find(i => i.id === p.id);
+  if (existing) { existing.qty++; } else { cartItems.push({...p, qty: 1}); }
+  renderCart();
+  document.getElementById('cartCount').textContent = cartItems.reduce((s,i) => s+i.qty, 0);
+  openCart();
+}
+function changeQty(id, delta) {
+  const item = cartItems.find(i => i.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) cartItems = cartItems.filter(i => i.id !== id);
+  renderCart();
+  document.getElementById('cartCount').textContent = cartItems.reduce((s,i) => s+i.qty, 0);
+}
+function removeFromCart(id) {
+  cartItems = cartItems.filter(i => i.id !== id);
+  renderCart();
+  document.getElementById('cartCount').textContent = cartItems.reduce((s,i) => s+i.qty, 0);
+}
+function getCartTotal() {
+  return cartItems.reduce((s,i) => {
+    const price = parseFloat((i.price||'0').replace(/[^0-9.]/g,'')) || 0;
+    return s + price * i.qty;
+  }, 0);
+}
+function renderCart() {
+  const list = document.getElementById('cartItemsList');
+  const footer = document.getElementById('cartFooter');
+  const empty = document.getElementById('cartEmpty');
+  document.getElementById('cartItemCount').textContent = cartItems.reduce((s,i) => s+i.qty, 0);
+  if (cartItems.length === 0) {
+    empty.style.display = 'flex';
+    footer.style.display = 'none';
+    list.innerHTML = '';
+    list.appendChild(empty);
+    return;
+  }
+  empty.style.display = 'none';
+  footer.style.display = 'block';
+  const total = getCartTotal();
+  const shipping = total >= 150 ? 'Free' : '$9.99';
+  document.getElementById('cartSubtotal').textContent = '$' + total.toFixed(2);
+  document.getElementById('cartShipping').textContent = shipping;
+  document.getElementById('cartTotal').textContent = '$' + (total + (shipping === 'Free' ? 0 : 9.99)).toFixed(2);
+  list.innerHTML = cartItems.map(i => {
+    const safeId = i.id.replace(/'/g, "\'");
+    const top = (i.cat||'').split(' > ')[0];
+    return `<div class="cart-item">
+      <img class="ci-img" src="${i.img}" alt="${i.name}" onerror="this.style.opacity='.2'">
+      <div class="ci-info">
+        <div class="ci-cat">${top}</div>
+        <div class="ci-name">${i.name}</div>
+        <div class="ci-row">
+          <div class="ci-qty">
+            <button onclick="changeQty('${safeId}',-1)">−</button>
+            <span>${i.qty}</span>
+            <button onclick="changeQty('${safeId}',1)">+</button>
+          </div>
+          <div class="ci-price">${i.price}</div>
+        </div>
+        <button class="ci-remove" onclick="removeFromCart('${safeId}')">Remove</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openCheckout() {
+  closeCart();
+  const total = getCartTotal();
+  const shipping = total >= 150 ? 'Free' : '$9.99';
+  document.getElementById('coSubtotal').textContent = '$' + total.toFixed(2);
+  document.getElementById('coTotal').textContent = '$' + (total + (shipping === 'Free' ? 0 : 9.99)).toFixed(2);
+  document.getElementById('coOrderItems').innerHTML = cartItems.map(i =>
+    `<div class="co-order-item"><span>${i.name.slice(0,38)}${i.name.length>38?'…':''} × ${i.qty}</span><span>${i.price}</span></div>`
+  ).join('');
+  document.getElementById('coBody').style.display = 'block';
+  document.getElementById('coSuccess').classList.remove('show');
+  document.getElementById('checkoutOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCheckout() {
+  document.getElementById('checkoutOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function placeOrder() {
+  document.getElementById('coBody').style.display = 'none';
+  document.getElementById('coSuccess').classList.add('show');
+  cartItems = [];
+  document.getElementById('cartCount').textContent = '0';
+  renderCart();
+}
+
 function startAICall(){
   const btn=document.querySelector('.ai-call-btn');btn.textContent='Connecting…';btn.disabled=true;
   const s=document.createElement('script');s.src='https://cdn.retellai.com/sdk/web-client.js';
@@ -949,5 +1154,80 @@ function startAICall(){
 nav('home');
 renderHome();
 </script>
+
+<!-- CART PANEL -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-hd">
+    <h3>Your Cart (<span id="cartItemCount">0</span>)</h3>
+    <button class="cart-close" onclick="closeCart()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  </div>
+  <div class="cart-items" id="cartItemsList">
+    <div class="cart-empty" id="cartEmpty">
+      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <p>Your cart is empty.<br>Find something great for your Miata.</p>
+      <button class="cart-empty-btn" onclick="closeCart();nav('shop')">Shop All Parts</button>
+    </div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-sub-row"><span>Subtotal</span><span id="cartSubtotal">$0.00</span></div>
+    <div class="cart-sub-row"><span>Shipping</span><span id="cartShipping">Free</span></div>
+    <div class="cart-sub-row total"><span>Total</span><span id="cartTotal">$0.00</span></div>
+    <button class="cart-checkout-btn" onclick="openCheckout()">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      Proceed to Checkout
+    </button>
+    <button class="cart-continue" onclick="closeCart()">Continue Shopping</button>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="checkout-overlay" id="checkoutOverlay">
+  <div class="checkout-modal">
+    <div class="co-hd">
+      <h3>Checkout</h3>
+      <button class="co-close" onclick="closeCheckout()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="co-body" id="coBody">
+      <div class="co-section">
+        <div class="co-section-title">Contact</div>
+        <div class="co-row full"><label class="co-label">Email</label><input class="co-input" type="email" placeholder="you@example.com"></div>
+        <div class="co-row full"><label class="co-label">Phone</label><input class="co-input" type="tel" placeholder="(555) 000-0000"></div>
+      </div>
+      <div class="co-section">
+        <div class="co-section-title">Shipping Address</div>
+        <div class="co-row"><div><label class="co-label">First Name</label><input class="co-input" placeholder="First"></div><div><label class="co-label">Last Name</label><input class="co-input" placeholder="Last"></div></div>
+        <div class="co-row full"><label class="co-label">Address</label><input class="co-input" placeholder="123 Main St"></div>
+        <div class="co-row"><div><label class="co-label">City</label><input class="co-input" placeholder="City"></div><div><label class="co-label">State / ZIP</label><input class="co-input" placeholder="OH 44101"></div></div>
+      </div>
+      <div class="co-section">
+        <div class="co-section-title">Payment</div>
+        <div class="co-row full"><label class="co-label">Card Number</label><input class="co-input" placeholder="4242 4242 4242 4242"></div>
+        <div class="co-row"><div><label class="co-label">Expiry</label><input class="co-input" placeholder="MM / YY"></div><div><label class="co-label">CVV</label><input class="co-input" placeholder="123"></div></div>
+      </div>
+      <div class="co-section">
+        <div class="co-section-title">Order Summary</div>
+        <div class="co-order-items" id="coOrderItems"></div>
+        <div class="co-totals">
+          <div class="co-total-row"><span>Subtotal</span><span id="coSubtotal"></span></div>
+          <div class="co-total-row"><span>Shipping</span><span>Free</span></div>
+          <div class="co-total-row grand"><span>Total</span><span id="coTotal"></span></div>
+        </div>
+      </div>
+      <button class="co-place-btn" onclick="placeOrder()">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Place Order
+      </button>
+      <div class="co-secure"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Secure checkout · SSL encrypted</div>
+    </div>
+    <div class="co-success" id="coSuccess">
+      <div class="co-success-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <h3>Order Confirmed!</h3>
+      <p>Thanks for your order. You'll receive a confirmation email shortly.<br>Your parts will ship within 1–2 business days.</p>
+      <button class="co-place-btn" style="margin-top:24px;max-width:200px" onclick="closeCheckout();closeCart()">Done</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
