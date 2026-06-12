@@ -1543,111 +1543,36 @@ function closeDrawer(){
 function buildMobFilterBar(){
   var bar=document.getElementById('mobFilterBar');
   if(!bar||window.innerWidth>768)return;
-  // Find current L1 node
   var activeL1=null;
-  NAV_TREE.forEach(function(n){if(n.id===cat||(n.ch&&isAnc(n,cat)))activeL1=n;});
-  // L1 pills
+  NAV_TREE.forEach(function(n){
+    if(n.id===cat||(n.ch&&isAnc(n,cat)))activeL1=n;
+  });
   var cats=[{id:null,label:'All'}];
-  NAV_TREE.forEach(function(n){cats.push({id:n.id,label:n.label})});
-  var l1html=cats.map(function(c){
-    var active=(cat===null&&c.id===null)||(c.id&&(cat===c.id||isAnc({ch:NAV_TREE.filter(function(x){return x.id===c.id;})[0]&&NAV_TREE.filter(function(x){return x.id===c.id;})[0]},cat)));
-    // simpler active check
+  NAV_TREE.forEach(function(n){cats.push({id:n.id,label:n.label});});
+  bar.innerHTML=cats.map(function(c){
     var isActive=(cat===null&&c.id===null)||(activeL1&&activeL1.id===c.id);
-    return '<button class="mob-fcat'+(isActive?' active':'')+'" onclick="sidSetCat('+(c.id?'''+c.id+''':'null')+');buildMobFilterBar()">'+c.label+'</button>';
+    var onclick=c.id
+      ? 'sidSetCat("'+c.id+'");buildMobFilterBar()'
+      : 'sidSetCat(null);buildMobFilterBar()';
+    return '<button class="mob-fcat'+(isActive?' active':'')+'" onclick="'+onclick+'">'+c.label+'</button>';
   }).join('');
-  // L2 pills if a category is selected
-  var l2html='';
+  // Remove old sub row
+  var old=document.getElementById('mobFilterSub');
+  if(old)old.remove();
+  // Add sub row if L1 selected and has children
   if(activeL1&&activeL1.ch&&activeL1.ch.length){
-    var subs=activeL1.ch.map(function(c){
+    var div=document.createElement('div');
+    div.className='mob-filter-sub';
+    div.id='mobFilterSub';
+    activeL1.ch.forEach(function(c){
       var isActive=cat===c.id;
-      return '<button class="mob-fcat mob-fcat-sub'+(isActive?' active':'')+'" onclick="sidSetCat(''+c.id+'');buildMobFilterBar()">'+c.label+'</button>';
-    }).join('');
-    l2html='<div class="mob-filter-sub" id="mobFilterSub">'+subs+'</div>';
-  }
-  bar.innerHTML=l1html;
-  // show/hide sub row
-  var subEl=document.getElementById('mobFilterSub');
-  if(subEl)subEl.remove();
-  if(l2html){
-    bar.insertAdjacentHTML('afterend',l2html);
+      var btn=document.createElement('button');
+      btn.className='mob-fcat mob-fcat-sub'+(isActive?' active':'');
+      btn.textContent=c.label;
+      btn.onclick=function(){sidSetCat(c.id);buildMobFilterBar();};
+      div.appendChild(btn);
+    });
+    bar.insertAdjacentElement('afterend',div);
   }
 }
-
-</script>
-
-<!-- CART PANEL -->
-<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
-<div class="cart-panel" id="cartPanel">
-  <div class="cart-hd">
-    <h3>Your Cart (<span id="cartItemCount">0</span>)</h3>
-    <button class="cart-close" onclick="closeCart()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  </div>
-  <div class="cart-items" id="cartItemsList">
-    <div class="cart-empty" id="cartEmpty">
-      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-      <p>Your cart is empty.<br>Find something great for your Miata.</p>
-      <button class="cart-empty-btn" onclick="closeCart();nav('shop')">Shop All Parts</button>
-    </div>
-  </div>
-  <div class="cart-footer" id="cartFooter" style="display:none">
-    <div class="cart-sub-row"><span>Subtotal</span><span id="cartSubtotal">$0.00</span></div>
-    <div class="cart-sub-row"><span>Shipping</span><span id="cartShipping">Free</span></div>
-    <div class="cart-sub-row total"><span>Total</span><span id="cartTotal">$0.00</span></div>
-    <button class="cart-checkout-btn" onclick="openCheckout()">
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      Proceed to Checkout
-    </button>
-    <button class="cart-continue" onclick="closeCart()">Continue Shopping</button>
-  </div>
-</div>
-
-<!-- CHECKOUT MODAL -->
-<div class="checkout-overlay" id="checkoutOverlay">
-  <div class="checkout-modal">
-    <div class="co-hd">
-      <h3>Checkout</h3>
-      <button class="co-close" onclick="closeCheckout()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-    </div>
-    <div class="co-body" id="coBody">
-      <div class="co-section">
-        <div class="co-section-title">Contact</div>
-        <div class="co-row full"><label class="co-label">Email</label><input class="co-input" type="email" placeholder="you@example.com"></div>
-        <div class="co-row full"><label class="co-label">Phone</label><input class="co-input" type="tel" placeholder="(555) 000-0000"></div>
-      </div>
-      <div class="co-section">
-        <div class="co-section-title">Shipping Address</div>
-        <div class="co-row"><div><label class="co-label">First Name</label><input class="co-input" placeholder="First"></div><div><label class="co-label">Last Name</label><input class="co-input" placeholder="Last"></div></div>
-        <div class="co-row full"><label class="co-label">Address</label><input class="co-input" placeholder="123 Main St"></div>
-        <div class="co-row"><div><label class="co-label">City</label><input class="co-input" placeholder="City"></div><div><label class="co-label">State / ZIP</label><input class="co-input" placeholder="OH 44101"></div></div>
-      </div>
-      <div class="co-section">
-        <div class="co-section-title">Payment</div>
-        <div class="co-row full"><label class="co-label">Card Number</label><input class="co-input" placeholder="4242 4242 4242 4242"></div>
-        <div class="co-row"><div><label class="co-label">Expiry</label><input class="co-input" placeholder="MM / YY"></div><div><label class="co-label">CVV</label><input class="co-input" placeholder="123"></div></div>
-      </div>
-      <div class="co-section">
-        <div class="co-section-title">Order Summary</div>
-        <div class="co-order-items" id="coOrderItems"></div>
-        <div class="co-totals">
-          <div class="co-total-row"><span>Subtotal</span><span id="coSubtotal"></span></div>
-          <div class="co-total-row"><span>Shipping</span><span>Free</span></div>
-          <div class="co-total-row grand"><span>Total</span><span id="coTotal"></span></div>
-        </div>
-      </div>
-      <button class="co-place-btn" onclick="placeOrder()">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        Place Order
-      </button>
-      <div class="co-secure"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Secure checkout · SSL encrypted</div>
-    </div>
-    <div class="co-success" id="coSuccess">
-      <div class="co-success-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <h3>Order Confirmed!</h3>
-      <p>Thanks for your order. You'll receive a confirmation email shortly.<br>Your parts will ship within 1–2 business days.</p>
-      <button class="co-place-btn" style="margin-top:24px;max-width:200px" onclick="closeCheckout();closeCart()">Done</button>
-    </div>
-  </div>
-</div>
-
-</body>
-</html>
+>
